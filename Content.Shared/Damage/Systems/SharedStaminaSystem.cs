@@ -1,4 +1,5 @@
 // <Trauma>
+using Content.Goobstation.Common.Damage.Events;
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Common.Stunnable;
 using Content.Shared._Shitcode.Weapons.Misc;
@@ -201,11 +202,16 @@ public abstract partial class SharedStaminaSystem : EntitySystem
             // raise event for each entity hit
             RaiseLocalEvent(ent, ref hitEvent);
 
+            // <Goob>
+            // raise event to modify outgoing stamina damage by multiplier or something
+            var outgoingModifier = new ModifyOutgoingStaminaDamageEvent(1f);
+            RaiseLocalEvent(args.User, ref outgoingModifier);
+
             var damageImmediate = component.Damage;
             var damageOvertime = component.Overtime;
-            damageImmediate *= hitEvent.Value;
-            damageOvertime *= hitEvent.Value;
-
+            damageImmediate *= hitEvent.Value * outgoingModifier.Value;
+            damageOvertime *= hitEvent.Value * outgoingModifier.Value;
+            // </Goob>
             if (args.Direction == null)
             {
                 damageImmediate *= component.LightAttackDamageMultiplier;
