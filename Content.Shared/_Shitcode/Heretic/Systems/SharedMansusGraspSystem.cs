@@ -22,6 +22,7 @@ using Content.Shared.Heretic.Components;
 using Content.Shared.Mind;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
+using Content.Shared.NPC.Systems;
 using Content.Shared.Popups;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.Silicons.StationAi;
@@ -56,6 +57,7 @@ public abstract class SharedMansusGraspSystem : EntitySystem
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly SharedTransformSystem _transform = default!;
     [Dependency] private readonly SharedStarMarkSystem _starMark = default!;
+    [Dependency] private readonly NpcFactionSystem _faction = default!;
 
     public bool TryApplyGraspEffectAndMark(EntityUid user,
         HereticComponent hereticComp,
@@ -169,6 +171,18 @@ public abstract class SharedMansusGraspSystem : EntitySystem
                     ghoul.GiveBlade = true;
 
                     AddComp(target, ghoul);
+                    RemCompDeferred<HereticCombatMarkComponent>(target);
+                    if (TryComp(target, out FleshMimickedComponent? mimicked))
+                    {
+                        foreach (var mimic in mimicked.FleshMimics)
+                        {
+                            if (!Exists(mimic))
+                                continue;
+
+                            _faction.DeAggroEntity(mimic, target);
+                        }
+                        RemCompDeferred(target, mimicked);
+                    }
                 }
 
                 break;
