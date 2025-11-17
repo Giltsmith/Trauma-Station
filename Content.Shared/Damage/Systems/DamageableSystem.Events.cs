@@ -296,7 +296,7 @@ public sealed class DamageChangedEvent : EntityEventArgs
         EntityUid? origin,
         // <Goob>
         bool ignoreBlockers = false,
-        DamageSpecifier? uncapped = null,
+        DamageSpecifier? uncapped = null
         // </Goob>
     )
     {

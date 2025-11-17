@@ -298,14 +298,5 @@ public abstract class SharedSprintingSystem : EntitySystem
     private void OnZombified(EntityUid uid, SprinterComponent component, ref EntityZombifiedEvent args) =>
         component.SprintSpeedMultiplier *= 0.5f; // We dont want super fast zombies do we?
 
-    private void OnDisarm(EntityUid uid, SprinterComponent sprinter, ref DisarmedEvent args)
-    {
-        if (!sprinter.IsSprinting)
-            return;
-
-        _staminaSystem.TakeStaminaDamage(uid, sprinter.StaminaPenaltyOnShove, applyResistances: true, logDamage: false);
-        ToggleSprint(uid, sprinter, false, gracefulStop: true);
-    }
-
     #endregion
 }

@@ -42,11 +42,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 {
     public static readonly EntProtoId StaminaLow = "StatusEffectStaminaLow";
 
-    // <Goob>
-    [Dependency] private readonly SharedStutteringSystem _stutter = default!;
-    [Dependency] private readonly SharedJitteringSystem _jitter = default!;
-    [Dependency] private readonly IRobustRandom _random = default!;
-    // </Goob>
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] protected readonly IGameTiming Timing = default!;
     [Dependency] private readonly INetManager _net = default!;
@@ -144,7 +139,6 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     private void OnDisarmed(EntityUid uid, StaminaComponent component, ref DisarmedEvent args)
     {
-        // No random stamina damage
         if (args.Handled)
             return;
 
@@ -321,7 +315,7 @@ public abstract partial class SharedStaminaSystem : EntitySystem
 
     public void TakeStaminaDamage(EntityUid uid, float value, StaminaComponent? component = null,
         EntityUid? source = null, EntityUid? with = null, bool visual = true, SoundSpecifier? sound = null, bool ignoreResist = false,
-        bool immediate = true) // Goob - stunmeta
+        bool immediate = true, bool logDamage = true) // Goob - stunmeta
     {
         if (!Resolve(uid, ref component, false)
         || value == 0) // no damage???

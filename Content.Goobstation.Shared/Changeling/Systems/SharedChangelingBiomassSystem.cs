@@ -9,6 +9,7 @@ using Content.Shared.Body.Systems;
 using Content.Shared.Chemistry.Components;
 using Content.Shared.Damage;
 using Content.Shared.Damage.Prototypes;
+using Content.Shared.Damage.Systems;
 using Content.Shared.Fluids;
 using Content.Shared.Mobs.Systems;
 using Content.Shared.Popups;
@@ -67,7 +68,7 @@ public abstract class SharedChangelingBiomassSystem : EntitySystem
 
     private void OnRemoved(Entity<ChangelingBiomassComponent> ent, ref ComponentRemove args)
     {
-        _alerts.ClearAlert(ent, ent.Comp.AlertId);
+        _alerts.ClearAlert(ent.Owner, ent.Comp.AlertId);
 
         if (_lingQuery.TryComp(ent, out var ling))
             ling.ChemicalRegenMultiplier -= ent.Comp.ChemicalBoost;
@@ -115,7 +116,7 @@ public abstract class SharedChangelingBiomassSystem : EntitySystem
 
             DoPopup(ent, ent.Comp.SecondWarnPopup, PopupType.MediumCaution);
 
-            _stun.TryStun(ent, ent.Comp.SecondWarnStun, false);
+            _stun.TryAddParalyzeDuration(ent, ent.Comp.SecondWarnStun);
         }
         else if (ent.Comp.Biomass > ent.Comp.SecondWarnThreshold)
             ent.Comp.SecondWarnReached = false;
@@ -128,13 +129,13 @@ public abstract class SharedChangelingBiomassSystem : EntitySystem
 
             DoPopup(ent, ent.Comp.ThirdWarnPopup, PopupType.LargeCaution);
 
-            _stun.TryStun(ent, ent.Comp.ThirdWarnStun, false);
+            _stun.TryAddParalyzeDuration(ent, ent.Comp.ThirdWarnStun);
 
             // do the blood cough
             if (!_blood.TryModifyBloodLevel(ent.Owner, -ent.Comp.BloodCoughAmount)
                 || !_bloodQuery.TryComp(ent, out var bloodComp))
             {
-                _stun.TryKnockdown(ent, ent.Comp.ThirdWarnStun, false);
+                _stun.TryKnockdown(ent.Owner, ent.Comp.ThirdWarnStun, false);
                 return;
             }
 
@@ -161,7 +162,7 @@ public abstract class SharedChangelingBiomassSystem : EntitySystem
         var newBiomass = ent.Comp.Biomass -= ent.Comp.DrainAmount;
         ent.Comp.Biomass = Math.Clamp(newBiomass, 0, ent.Comp.MaxBiomass);
 
-        _alerts.ShowAlert(ent, ent.Comp.AlertId);
+        _alerts.ShowAlert(ent.Owner, ent.Comp.AlertId);
     }
 
     public readonly ProtoId<DamageTypePrototype> Genetic = "Cellular";
@@ -173,7 +174,7 @@ public abstract class SharedChangelingBiomassSystem : EntitySystem
             return;
 
         var damagespec = new DamageSpecifier(genetic, (FixedPoint2) totalDamage);
-        _dmg.TryChangeDamage(ent, damagespec, targetPart: TargetBodyPart.All, splitDamage: SplitDamageBehavior.SplitEnsureAllOrganic);
+        _dmg.ChangeDamage(ent.Owner, damagespec, targetPart: TargetBodyPart.All, splitDamage: SplitDamageBehavior.SplitEnsureAllOrganic);
 
         EnsureComp<AbsorbedComponent>(ent);
 

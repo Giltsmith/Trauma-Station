@@ -51,7 +51,7 @@ public sealed partial class DamageableSystem : EntitySystem
         EntityUid? origin = null,
         // <Goob>
         bool ignoreBlockers = false,
-        DamageSpecifier? uncappedDamage = null,
+        DamageSpecifier? uncappedDamage = null
         // </Goob>
     )
     {
