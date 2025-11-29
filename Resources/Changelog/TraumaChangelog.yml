@@ -702,3 +702,9 @@ Entries:
       message: Many syndicate items made weaker.
   id: 80
   time: '2025-11-29T18:42:13.0000000+00:00'
+- author: Aviu
+  changes:
+    - type: Fix
+      message: Fix audio muffle being shitty in some scenarios.
+  id: 81
+  time: '2025-11-29T18:56:46.0000000+00:00'
