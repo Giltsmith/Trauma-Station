@@ -718,3 +718,13 @@ Entries:
       message: No heretic flesh path rework due to shitcode crimes.
   id: 82
   time: '2025-11-30T01:37:40.0000000+00:00'
+- author: Armok
+  changes:
+    - type: Add
+      message: >-
+        Bomb collars for insurgents, they are disabled and serve as a way to
+        identify.
+    - type: Fix
+      message: Guns hitting targets a tile after the target
+  id: 83
+  time: '2025-11-30T05:22:27.0000000+00:00'
