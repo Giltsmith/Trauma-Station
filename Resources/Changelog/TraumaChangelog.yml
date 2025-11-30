@@ -770,3 +770,17 @@ Entries:
       message: new laser gun sprites
   id: 84
   time: '2025-11-30T05:46:57.0000000+00:00'
+- author: TurboTrackerss14
+  changes:
+    - type: Tweak
+      message: >-
+        CQC removed from hitman bundle, replaced with capoeira an extra mag and
+        an energy dagger.
+    - type: Tweak
+      message: >-
+        Krav Maga implant removed from Cyberpsychosis bundle, replaced with fake
+        mindshield.
+    - type: Remove
+      message: BigBoxCQC 100TC crate.
+  id: 85
+  time: '2025-11-30T06:11:04.0000000+00:00'
