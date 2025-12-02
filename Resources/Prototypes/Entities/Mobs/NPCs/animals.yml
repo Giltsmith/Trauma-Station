@@ -379,7 +379,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.2
-        density: 100
+        density: 2 # Goob edit
         mask:
         - SmallMobMask
         layer:
@@ -516,7 +516,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.2
-        density: 120
+        density: 12 # Goob edit
         mask:
         - SmallMobMask
         layer:
@@ -1853,7 +1853,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.2
-        density: 100
+        density: 10 # Goob eedit
         mask:
         - SmallMobMask
         layer:
@@ -3653,7 +3653,7 @@
         shape:
           !type:PhysShapeCircle
           radius: 0.2
-        density: 120
+        density: 12 # Goob edit
         mask:
         - SmallMobMask
         layer:
