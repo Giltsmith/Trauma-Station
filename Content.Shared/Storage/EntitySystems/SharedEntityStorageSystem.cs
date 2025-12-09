@@ -213,7 +213,7 @@ public abstract class SharedEntityStorageSystem : EntitySystem
 
     public void EmptyContents(EntityUid uid, EntityStorageComponent? component = null)
     {
-        if (!Resolve(uid, ref component))
+        if (!Resolve(uid, ref component, false)) // Trauma - goob chuds called this whenever rod touches ANYTHING, so don't log missing
             return;
 
         var uidXform = Transform(uid);
