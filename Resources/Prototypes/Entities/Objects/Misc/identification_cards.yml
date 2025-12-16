@@ -745,6 +745,18 @@
 
 - type: entity
   parent: IDCardStandard
+  id: XenoborgIDCard
+  name: xenoborg ID card
+  components:
+  - type: Sprite
+    layers:
+    - state: default
+  - type: Access
+    tags:
+    - Xenoborg
+
+- type: entity
+  parent: IDCardStandard
   id: ReporterIDCard
   name: reporter ID card
   components:
