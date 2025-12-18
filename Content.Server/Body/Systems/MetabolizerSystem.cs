@@ -19,7 +19,6 @@ using Content.Shared.EntityEffects.Effects.Body;
 using Content.Shared.EntityEffects.Effects.Solution;
 using Content.Goobstation.Maths.FixedPoint;
 using Content.Shared.Mobs.Systems;
-using Content.Shared.Random.Helpers;
 using Robust.Shared.Collections;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
@@ -141,8 +140,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
         var list = solution.Contents.ToList();
 
         // Collecting blood reagent for filtering
-        var bloodList = new List<string>();
-        var ev = new MetabolismExclusionEvent(bloodList);
+        var ev = new MetabolismExclusionEvent();
         RaiseLocalEvent(solutionEntityUid.Value, ref ev);
 
         // randomize the reagent list so we don't have any weird quirks
@@ -158,7 +156,7 @@ public sealed class MetabolizerSystem : SharedMetabolizerSystem
                 continue;
 
             // Skip blood reagents
-            if (bloodList.Contains(reagent.Prototype))
+            if (ev.Reagents.Contains(reagent))
                 continue;
 
             var mostToRemove = FixedPoint2.Zero;
