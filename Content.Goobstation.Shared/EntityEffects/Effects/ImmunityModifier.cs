@@ -35,7 +35,7 @@ public sealed partial class ImmunityModifier : EntityEffectBase<ImmunityModifier
             ("chance", Probability),
             ("gainrate", GainRateModifier),
             ("strength", StrengthModifier),
-            ("time", StatusLifetime));
+            ("time", StatusLifetime.TotalSeconds));
 }
 
 public sealed class ImmunityModifierEffectSystem : EntityEffectSystem<DiseaseCarrierComponent, ImmunityModifier>
