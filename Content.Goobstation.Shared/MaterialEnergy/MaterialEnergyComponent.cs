@@ -5,12 +5,15 @@
 // SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
+using Content.Shared.Materials;
+using Robust.Shared.GameStates;
+using Robust.Shared.Prototypes;
 
-namespace Content.Goobstation.Server.MaterialEnergy;
+namespace Content.Goobstation.Shared.MaterialEnergy;
 
-[RegisterComponent]
+[RegisterComponent, NetworkedComponent, Access(typeof(MaterialEnergySystem))]
 public sealed partial class MaterialEnergyComponent : Component
 {
-    [DataField, AutoNetworkedField]
-    public List<string>? MaterialWhiteList;
+    [DataField(required: true)]
+    public List<ProtoId<MaterialPrototype>> MaterialWhiteList = new();
 }

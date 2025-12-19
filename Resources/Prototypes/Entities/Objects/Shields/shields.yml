@@ -639,10 +639,10 @@
     - type: StaticPrice
       price: 350
       # WD EDIT START
-    - type: PredictedBattery
+    - type: Battery
       maxCharge: 35
       startingCharge: 35
-    - type: PredictedBatterySelfRecharger
+    - type: BatterySelfRecharger
       autoRechargeRate: 3
     - type: RechargeableBlocking
       dischargedRechargeRate: 2

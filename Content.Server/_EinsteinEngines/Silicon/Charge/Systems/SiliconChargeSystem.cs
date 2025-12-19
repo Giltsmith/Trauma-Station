@@ -41,7 +41,7 @@ public sealed class SiliconChargeSystem : EntitySystem
     [Dependency] private readonly IConfigurationManager _config = default!;
     [Dependency] private readonly PowerCellSystem _powerCell = default!;
     [Dependency] private readonly AlertsSystem _alerts = default!;
-    [Dependency] private readonly PredictedBatterySystem _battery = default!; // Goobstation - Energycrit
+    [Dependency] private readonly SharedBatterySystem _battery = default!; // Goobstation - Energycrit
 
     public override void Initialize()
     {
