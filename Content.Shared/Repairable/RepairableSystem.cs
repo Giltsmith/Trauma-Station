@@ -38,48 +38,35 @@ public sealed partial class RepairableSystem : EntitySystem
         SubscribeLocalEvent<RepairableComponent, RepairFinishedEvent>(OnRepairFinished);
     }
 
-    // Goob edit start
-    /// <summary>
-    /// Method <c>ApplyRepairs</c> Applies repair according to "RepairableComponent" present on entity. Returns false if fail or nothing else to repair.
-    /// </summary>
-    /// <param name="target">the target Entity</param>
-    /// <param name="user">The entity trying to repair</param>
-    /// <returns> Wether or not there is something else to repair. If fails, returns false too </returns>
-    public bool ApplyRepairs(Entity<RepairableComponent> ent, EntityUid user)
+    private void OnRepairFinished(Entity<RepairableComponent> ent,  ref RepairFinishedEvent args)
     {
+        if (args.Cancelled)
+            return;
+
         if (!TryComp(ent.Owner, out DamageableComponent? damageable) || damageable.TotalDamage == 0)
-            return false;
+            return;
 
-        if (user == ent.Owner)
-            if (!ent.Comp.AllowSelfRepair)
-                return false;
-
-        if (TryComp<BodyComponent>(ent.Owner, out var body) && ent.Comp.Damage != null && body != null) // repair entities with bodies
+        if (TryComp<BodyComponent>(ent.Owner, out var body) && ent.Comp.Damage != null && body != null) // Goob edit : repair entities with bodies
         {
+            var targetedWoundable = EntityUid.Invalid;
+            if (TryComp<TargetingComponent>(args.User, out var targeting))
+            {
+                var (partType, symmetry) = _body.ConvertTargetBodyPart(targeting.Target);
+                var targetedBodyPart = _body.GetBodyChildrenOfType(ent, partType, body, symmetry).ToList().FirstOrDefault();
+                targetedWoundable = targetedBodyPart.Id;
+            }
+
+            if (!TryComp<DamageableComponent>(targetedWoundable, out var damageableComp))
+                return;
+
             // here we create a fake healing comp
             // /!\ SHITCODE ALERT /!\
             HealingComponent repairHealing = new HealingComponent();
             repairHealing.Damage = ent.Comp.Damage;
             repairHealing.BloodlossModifier = -100;
 
-            var targetedWoundable = EntityUid.Invalid;
-            if (TryComp<TargetingComponent>(user, out var targeting))
-            {
-                var (partType, symmetry) = _body.ConvertTargetBodyPart(targeting.Target);
-                var targetedBodyPart = _body.GetBodyChildrenOfType(ent, partType, body, symmetry).ToList().FirstOrDefault();
-                targetedWoundable = targetedBodyPart.Id;
-            }
-            else
-            {
-                if (_healing.TryGetNextDamagedPart(ent, repairHealing, out var limbTemp) && limbTemp is not null)
-                    targetedWoundable = limbTemp.Value;
-            }
-
-            if (!TryComp<DamageableComponent>(targetedWoundable, out var damageableComp))
-                return false;
-
-            if (!_healing.IsBodyDamaged((ent.Owner, body), null, repairHealing, targetedWoundable))                    // Check if there is anything to heal on the initial limb target
-                if (_healing.TryGetNextDamagedPart(ent, repairHealing, out var limbTemp) && limbTemp is not null)      // If not then get the next limb to heal
+            if (!_healingSystem.IsBodyDamaged((ent.Owner, body), null, repairHealing, targetedWoundable))                          // Check if there is anything to heal on the initial limb target
+                if (_healingSystem.TryGetNextDamagedPart(ent, repairHealing, out var limbTemp) && limbTemp is not null)      // If not then get the next limb to heal
                     targetedWoundable = limbTemp.Value;
 
             // Welding removes all bleeding instantly. IPC don't even have blood as i'm writing this so makes 0 sense for them to have bleeds.
@@ -93,46 +80,36 @@ public sealed partial class RepairableSystem : EntitySystem
                             ? Loc.GetString("rebell-medical-item-stop-bleeding-fully")
                             : Loc.GetString("rebell-medical-item-stop-bleeding-partially"),
                         ent,
-                        user);
+                        args.User);
             }
 
-            var damageChanged = _damageableSystem.ChangeDamage(targetedWoundable, ent.Comp.Damage, true, false, origin: user);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
+            var damageChanged = _damageableSystem.ChangeDamage(targetedWoundable, ent.Comp.Damage, true, false, origin: args.User);
+            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
 
-            if (_healing.TryGetNextDamagedPart(ent.Owner, repairHealing, out var _))
-                return true;
+            if (_healingSystem.TryGetNextDamagedPart(ent.Owner, repairHealing, out var _) && args.Used != null) // args.Repeat doesn't work because this current event is a wrapped event of ToolDoAfterEvent
+            {
+                float delay = ent.Comp.DoAfterDelay;
+                if (args.User == args.Target)
+                {
+                    if (!ent.Comp.AllowSelfRepair)
+                        return;
+
+                    delay *= ent.Comp.SelfRepairPenalty;
+                }
+                args.Handled = _toolSystem.UseTool(args.Used.Value, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairFinishedEvent(), ent.Comp.FuelCost);
+            }
         }
-        else if (ent.Comp.Damage != null)
+        else if (ent.Comp.Damage != null) // goob edit end
         {
-            var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, ent.Comp.Damage, true, false, origin: user);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
+            var damageChanged = _damageableSystem.ChangeDamage(ent.Owner, ent.Comp.Damage, true, false, origin: args.User);
+            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} by {damageChanged.GetTotal()}");
         }
         else
         {
             // Repair all damage
             _damageableSystem.SetAllDamage((ent.Owner, damageable), 0);
-            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(user):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
+            _adminLogger.Add(LogType.Healed, $"{ToPrettyString(args.User):user} repaired {ToPrettyString(ent.Owner):target} back to full health");
         }
-        return false;
-    } // Goob edit end
-
-    private void OnRepairFinished(Entity<RepairableComponent> ent, ref RepairFinishedEvent args)
-    {
-        if (args.Cancelled)
-            return;
-        // Goob edit start
-        bool repairStatus = ApplyRepairs(ent, args.User);
-
-        if (repairStatus && HasComp<BodyComponent>(ent) && args.Used != null)
-        {
-            float delay = ent.Comp.DoAfterDelay;
-            if (args.User == ent.Owner)
-            {
-                delay *= ent.Comp.SelfRepairPenalty;
-            }
-            args.Handled = _toolSystem.UseTool(args.Used.Value, args.User, ent.Owner, delay, ent.Comp.QualityNeeded, new RepairFinishedEvent(), ent.Comp.FuelCost); // args.Repeat doesn't work because this current event is a wrapped event of ToolDoAfterEvent
-        }
-        // Goob edit end
 
         var str = Loc.GetString("comp-repairable-repair", ("target", ent.Owner), ("tool", args.Used!));
         _popup.PopupClient(str, ent.Owner, args.User);
