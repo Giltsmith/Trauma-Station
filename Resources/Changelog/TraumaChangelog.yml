@@ -894,3 +894,9 @@ Entries:
       message: Added streamer mode for muting copyrighted audio.
   id: 101
   time: '2025-12-29T15:52:06.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: Fixed kudzu spreading way too fast.
+  id: 102
+  time: '2025-12-29T18:06:11.0000000+00:00'
