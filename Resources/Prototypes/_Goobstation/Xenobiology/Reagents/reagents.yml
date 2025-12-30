@@ -45,11 +45,11 @@
       - !type:ModifyStatusEffect
         effectProto: StatusEffectFireImmune
         time: 60
-        refresh: false
+        type: Add
       - !type:ModifyStatusEffect
         effectProto: StatusEffectWeatherImmune
         time: 60
-        refresh: false
+        type: Add
 
 - type: reagent
   parent: Slime

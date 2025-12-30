@@ -746,9 +746,6 @@
   - type: EmitSoundOnUse
     sound:
       path: /Audio/Items/welder.ogg
-  - type: Construction
-    graph: ToyMansusGrasp
-    node: toymansusgrasp
 
 - type: entity
   parent: [ BaseItem, BaseMinorContraband ]
@@ -756,9 +753,6 @@
   name: replica eldritch blade
   description: A plastic green crescent blade, decorated with an ornamental eye. You feel like you're being watched...
   components:
-  - type: Construction
-    graph: ToyBlades
-    node: start
   - type: Sprite
     sprite: _Goobstation/Heretic/Blades/eldritch_blade.rsi
     state: icon
@@ -848,6 +842,3 @@
   - type: Item
     size: Small
     sprite: _Goobstation/Heretic/book.rsi
-  - type: Construction
-    graph: ToyCodexCicatrix
-    node: toycodexcicatrix

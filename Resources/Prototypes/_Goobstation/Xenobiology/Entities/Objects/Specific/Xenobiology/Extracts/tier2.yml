@@ -96,7 +96,7 @@
         proto: XenobioExtractEvil
       - !type:CreateGas
         gas: Frezon
-        multiplier: 35
+        moles: 35
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:
@@ -126,16 +126,13 @@
       methods: [ Touch, Injection ]
       effects:
       - !type:NestedEffect
-        proto: XenobioReactionEvil
+        proto: XenobioExtractEvil
       - !type:Jitter
         time: 5
         frequency: 20
-      - !type:AreaReactionEffect
-        duration: 10
-        delay: 5
-        prototypeId: AluminiumMetalFoam
-        sound:
-          path: /Audio/Effects/extinguish.ogg
+      - !type:ModifyStatusEffect
+        time: 5
+        effectProto: XenobioMetalFoamStatusEffect
     - reagents: [ Plasma ]
       methods: [ Touch, Injection ]
       effects:
@@ -304,7 +301,7 @@
         proto: XenobioExtractReaction
       - !type:RelayNearby
         compName: StatusEffects
-        radius: 12
+        range: 12
         effect: !type:ModifyStatusEffect
           probability: 0.5
           effectProto: ForcedStealthStatusEffect
@@ -321,7 +318,7 @@
         smokePrototype: Smoke
       - !type:RelayNearby
         compName: StatusEffects
-        radius: 7
+        range: 7
         effect: !type:ModifyStatusEffect
           effectProto: ForcedStealthStatusEffect
           type: Add
@@ -333,7 +330,7 @@
         proto: XenobioExtractReaction
       - !type:RelayNearby
         compName: StatusEffects
-        radius: 1.5
+        range: 1.5
         effect: !type:ModifyStatusEffect
           effectProto: ForcedStealthStatusEffect
           type: Add

@@ -9,29 +9,32 @@
     layers:
       - sprite: _Goobstation/Xenobiology/Specific/Xenobiology/volatile_organ.rsi
         state: icon
+  - type: GenericVisualizer
+    visuals: {} # disable battery visuals
   - type: Item
     size: Normal
-  - type: Battery
+  - type: PredictedBattery
     pricePerJoule: 0.15
     maxCharge: 5200
     startingCharge: 5200
-  - type: BatterySelfRecharger
-    autoRecharge: true
+  - type: PredictedBatterySelfRecharger
     autoRechargeRate: 40
   - type: EmpImmune
   - type: SolutionContainerManager
     solutions:
       battery:
         maxVol: 15
-  - type: InjectableSolution
-    solution: battery
-  - type: DrawableSolution
-    solution: battery
+      food:
+        maxVol: 15
+        reagents:
+        - ReagentId: Slime
+          Quantity: 15
   - type: Extractable
     juiceSolution:
       reagents:
       - ReagentId: Slime
         Quantity: 15
+  - type: Heart
   - type: Organ
     onAdd:
     - type: LightningArcShooter

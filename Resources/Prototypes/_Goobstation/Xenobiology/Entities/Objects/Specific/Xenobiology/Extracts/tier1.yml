@@ -30,7 +30,7 @@
         proto: XenobioExtractReaction
       - !type:RelayNearby
         compName: Flammable
-        radius: 3
+        range: 3
         effect: !type:NestedEffect
           proto: Ignite5
       - !type:Flash

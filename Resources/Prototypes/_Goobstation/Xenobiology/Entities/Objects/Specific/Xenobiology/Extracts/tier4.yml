@@ -27,12 +27,9 @@
       - !type:Jitter
         time: 5
         frequency: 20
-      - !type:Explosion
-        delay: 5
-        explosionType: FireBomb # bomboclat
-        maxIntensity: 1050
-        intensitySlope: 4
-        intensityPerUnit: 70
+      - !type:ModifyStatusEffect
+        time: 5
+        effectProto: XenobioExplodeStatusEffect
     - reagents: [ Blood ]
       methods: [ Touch, Injection ]
       effects:
@@ -85,7 +82,7 @@
         frequency: 20
       - !type:RelayNearby
         compName: Dna
-        radius: 3
+        range: 3
         effect: !type:ScrambleDna
   - type: Tag
     tags:
@@ -145,7 +142,7 @@
         proto: XenobioExtractEvil # chud forgot to give this one a popup idc
       - !type:CreateGas
         gas: Healium
-        multiplier: 55
+        moles: 55
     - reagents: [ Plasma ]
       methods: [ Touch, Injection ]
       effects:

@@ -32,7 +32,7 @@
         proto: XenobioExtractReaction
       - !type:RelayNearby
         compName: NpcFactionMember
-        radius: 3
+        range: 3
         effect: !type:ChangeFaction
           newFaction: AllHostile # BILLIONS MUST KILL
           duration: 30
@@ -99,7 +99,7 @@
         proto: XenobioExtractReaction
       - !type:RelayNearby
         compName: PlantHolder # TODO: may need to change this if botany ecs ever gets merged
-        radius: 5
+        range: 5
         effect: !type:PlantAdjustMutationLevel
     - reagents: [ Plasma ]
       methods: [ Touch, Injection ]

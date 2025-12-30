@@ -160,7 +160,6 @@
     - MobReindeerBuck
     - MobReindeerDoe
     - MobCockroach
-    - MobSquackroach
     - MobSlimeXenobioBabyGrey
     - MobSnail
     - MobSnailSpeed
@@ -174,7 +173,7 @@
   parent: MarkerBase
   components:
   - type: TimedDespawn
-    delay: 3
+    lifetime: 3
   - type: SpawnOnDespawn
     prototype: RandomPassiveMobSpawner
 
