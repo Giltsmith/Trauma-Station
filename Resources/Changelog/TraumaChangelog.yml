@@ -1060,3 +1060,11 @@ Entries:
       message: You can now build wooden crosses to crucify people with.
   id: 125
   time: '2026-01-04T20:54:02.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Add
+      message: >-
+        Added softcrit, you can crawl around and whisper at 100 damage until you
+        hardcrit at 150 damage.
+  id: 126
+  time: '2026-01-05T02:43:28.0000000+00:00'
