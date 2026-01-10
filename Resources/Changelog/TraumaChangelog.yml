@@ -1154,3 +1154,9 @@ Entries:
       message: Fixed russian shitcode examining.
   id: 136
   time: '2026-01-09T20:15:52.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: Fixed cigars/cigarettes not being usable as a cautery in surgery.
+  id: 137
+  time: '2026-01-10T11:57:19.0000000+00:00'
