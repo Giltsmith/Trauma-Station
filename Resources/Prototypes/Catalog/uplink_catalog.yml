@@ -2230,7 +2230,7 @@
   description: uplink-smuggler-satchel-desc
   productEntity: ClothingBackpackSatchelSmugglerUnanchored
   cost:
-    Telecrystal: 10 # Goobstation
+    Telecrystal: 5 # Trauma - was 1, 5x
   categories:
   - UplinkDeception
 
