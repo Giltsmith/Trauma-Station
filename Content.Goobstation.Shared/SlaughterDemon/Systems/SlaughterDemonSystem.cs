@@ -1,5 +1,9 @@
 using Content.Goobstation.Common.Devour;
 using Content.Shared.Actions;
+using Content.Shared.Administration.Systems;
+using Content.Shared.Body.Components;
+using Content.Shared.Body.Systems;
+using Content.Shared.Gibbing;
 using Content.Shared.Item;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Components;
@@ -15,12 +19,14 @@ using Robust.Shared.Timing;
 
 namespace Content.Goobstation.Shared.SlaughterDemon.Systems;
 
-public abstract class SharedSlaughterDemonSystem : EntitySystem
+public sealed class SlaughterDemonSystem : EntitySystem
 {
     [Dependency] private readonly MovementSpeedModifierSystem _movementSpeedModifier = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
+    [Dependency] private readonly RejuvenateSystem _rejuvenate = default!;
     [Dependency] private readonly SlaughterDevourSystem _slaughterDevour = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
+    [Dependency] private readonly SharedBloodstreamSystem _bloodstream = default!;
     [Dependency] private readonly SharedContainerSystem _container = default!;
     [Dependency] private readonly MobStateSystem _mobState = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
@@ -29,6 +35,7 @@ public abstract class SharedSlaughterDemonSystem : EntitySystem
     [Dependency] private readonly INetManager _netManager = default!;
 
     private EntityQuery<ActorComponent> _actorQuery;
+    private EntityQuery<BloodstreamComponent> _bloodstreamQuery;
     private EntityQuery<MobStateComponent> _mobStateQuery;
 
     /// <inheritdoc/>
@@ -37,6 +44,7 @@ public abstract class SharedSlaughterDemonSystem : EntitySystem
         base.Initialize();
 
         _actorQuery = GetEntityQuery<ActorComponent>();
+        _bloodstreamQuery = GetEntityQuery<BloodstreamComponent>();
         _mobStateQuery = GetEntityQuery<MobStateComponent>();
 
         // movement speed
@@ -48,6 +56,7 @@ public abstract class SharedSlaughterDemonSystem : EntitySystem
 
         // devouring
         SubscribeLocalEvent<SlaughterDemonComponent, SlaughterDevourEvent>(OnSlaughterDevour);
+        SubscribeLocalEvent<SlaughterDemonComponent, BeingGibbedEvent>(OnBeingGibbed);
 
         // polymorph shittery
         SubscribeLocalEvent<SlaughterDemonComponent, PolymorphedEvent>(OnPolymorph);
@@ -138,6 +147,26 @@ public abstract class SharedSlaughterDemonSystem : EntitySystem
         _slaughterDevour.IncrementObjective(demonUid,pullingEnt, demon);
     }
 
+    private void OnBeingGibbed(Entity<SlaughterDemonComponent> ent, ref BeingGibbedEvent args)
+    {
+        if (!TryComp<SlaughterDevourComponent>(ent.Owner, out var devour)
+            || devour.Container == null)
+            return;
+
+        _container.EmptyContainer(devour.Container);
+
+        // Allow everyone to self revive again (if they have the ability to)
+        foreach (var entity in ent.Comp.ConsumedMobs)
+            RemComp<PreventSelfRevivalComponent>(entity);
+
+        // heal them if they were in the laughter demon
+        if (!ent.Comp.IsLaughter)
+            return;
+
+        foreach (var entity in ent.Comp.ConsumedMobs)
+            _rejuvenate.PerformRejuvenate(entity);
+    }
+
     private void RefreshMovement(EntityUid uid,
         SlaughterDemonComponent component,
         RefreshMovementSpeedModifiersEvent args)
@@ -163,7 +192,13 @@ public abstract class SharedSlaughterDemonSystem : EntitySystem
     private void OnPickup(Entity<SlaughterDemonComponent> ent, ref PickupAttemptEvent args) =>
         args.Cancel();
 
-    protected virtual void RemoveBlood(EntityUid uid) {}
+    private void RemoveBlood(EntityUid uid)
+    {
+        if (!_bloodstreamQuery.TryComp(uid, out var comp))
+            return;
+
+        _bloodstream.SpillAllSolutions((uid, comp));
+    }
 
     #region Helper
 
@@ -173,7 +208,7 @@ public abstract class SharedSlaughterDemonSystem : EntitySystem
             return;
 
         if (!_random.Prob(ent.Comp.BloodCrawlSoundChance))
-          return;
+            return;
 
         var entities = _lookup.GetEntitiesInRange(ent.Owner, ent.Comp.BloodCrawlSoundLookup);
         foreach (var entity in entities)
