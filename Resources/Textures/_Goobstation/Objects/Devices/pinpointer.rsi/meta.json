@@ -1,7 +1,7 @@
 {
     "version": 1,
     "license": "CC-BY-SA-3.0",
-    "copyright": "detective created for GoobStation by Taro Varne",
+    "copyright": "detective created for GoobStation by Taro Varne. science and universal unattributed, added by chud @Roudenn (github)",
     "size": {
         "x": 32,
         "y": 32
@@ -9,6 +9,12 @@
     "states": [
         {
             "name": "pinpointer-detective"
+        },
+        {
+            "name": "pinpointer-science"
+        },
+        {
+            "name": "pinpointer-universal"
         }
     ]
 }
