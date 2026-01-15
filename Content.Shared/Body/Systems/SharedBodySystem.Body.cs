@@ -47,7 +47,6 @@ public partial class SharedBodySystem
      */
 
     [Dependency] private readonly InventorySystem _inventory = default!;
-    [Dependency] private readonly SharedAudioSystem _audioSystem = default!;
 
     // Shitmed Change Start
     [Dependency] private readonly MobStateSystem _mobState = default!;
