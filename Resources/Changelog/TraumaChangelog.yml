@@ -1,5 +1,5 @@
 Name: Traumalog
-Order: -2
+Order: -1
 Entries:
 - author: Durk
   changes:
@@ -1494,3 +1494,9 @@ Entries:
       message: Added Hideo Kojima to the credits.
   id: 178
   time: '2026-01-16T17:03:56.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: Fixed Box station's power in medbay.
+  id: 179
+  time: '2026-01-16T19:38:27.0000000+00:00'
