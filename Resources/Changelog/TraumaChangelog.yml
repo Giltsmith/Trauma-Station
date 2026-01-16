@@ -1474,3 +1474,11 @@ Entries:
       message: Fixed crew reinforcements' IDs having no name.
   id: 175
   time: '2026-01-16T07:49:29.0000000+00:00'
+- author: Nousagi37
+  changes:
+    - type: Tweak
+      message: >-
+        Updated Metastation with localized content, and re-enabled it back in
+        the map pool.
+  id: 176
+  time: '2026-01-16T08:40:55.0000000+00:00'
