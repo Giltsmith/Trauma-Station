@@ -1458,3 +1458,19 @@ Entries:
       message: Removed BSO
   id: 174
   time: '2026-01-16T07:32:17.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: >-
+        Food that rots in containers like mail won't teleport slop outside of
+        the container.
+    - type: Fix
+      message: Fixed plastic bananas rotting.
+    - type: Tweak
+      message: Plastic bananas are now made of microplastics.
+    - type: Fix
+      message: Fixed clowns shooting guns mispredicting.
+    - type: Fix
+      message: Fixed crew reinforcements' IDs having no name.
+  id: 175
+  time: '2026-01-16T07:49:29.0000000+00:00'
