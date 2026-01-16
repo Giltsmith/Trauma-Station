@@ -1450,3 +1450,11 @@ Entries:
       message: Fixed borg sprites displaying errors sometimes (hopefully)
   id: 173
   time: '2026-01-15T21:28:56.0000000+00:00'
+- author: MayasMischief
+  changes:
+    - type: Tweak
+      message: Monkeys and Kobolds are ghostroles more often.
+    - type: Remove
+      message: Removed BSO
+  id: 174
+  time: '2026-01-16T07:32:17.0000000+00:00'
