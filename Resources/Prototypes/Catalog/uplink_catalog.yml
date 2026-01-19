@@ -593,7 +593,6 @@
   categories:
   - UplinkChemicals
 
-
 # Goobstaiton - Disable Zombie Kit
 #- type: listing
 #  id: UplinkZombieBundle
@@ -625,17 +624,15 @@
   categories:
   - UplinkChemicals
 
-
 - type: listing
   id: UplinkCombatMedkit
   name: uplink-combat-medkit-name
   description: uplink-combat-medkit-desc
   productEntity: MedkitCombatFilled
   cost:
-    Telecrystal: 10 #goob
+    Telecrystal: 10 # Trauma - was 3, 5x but even cheaper because its a fucking medkit.
   categories:
   - UplinkChemicals
-
 
 - type: listing
   id: UplinkCombatMedipen
@@ -643,10 +640,9 @@
   description: uplink-combat-medipen-desc
   productEntity: CombatMedipen
   cost:
-    Telecrystal: 12 # Goobstation - Combat pen rebalance
+    Telecrystal: 10 # Trauma - was 3, 5x but even cheaper because its a single use omni pen. you can get healing anywhere
   categories:
   - UplinkChemicals
-
 
 - type: listing
   id: UplinkStimpack
@@ -658,7 +654,6 @@
   categories:
   - UplinkChemicals
 
-
 - type: listing
   id: UplinkStimkit
   name: uplink-stimkit-name
@@ -669,7 +664,6 @@
   categories:
   - UplinkChemicals
 
-
 - type: listing
   id: UplinkCigarettes
   name: uplink-cigarettes-name
@@ -679,7 +673,6 @@
     Telecrystal: 5 # goob
   categories:
   - UplinkChemicals
-
 
 - type: listing
   id: UplinkMedsBundle
@@ -699,7 +692,6 @@
       blacklist:
         components:
           - SurplusBundle
-
 
 # Deception
 - type: listing
