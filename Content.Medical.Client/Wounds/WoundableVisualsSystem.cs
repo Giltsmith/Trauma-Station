@@ -72,7 +72,7 @@ public sealed class WoundableVisualsSystem : VisualizerSystem<WoundableVisualsCo
     private void OnWoundableInserted(Entity<WoundableVisualsComponent> ent, ref OrganGotInsertedEvent args)
     {
         var body = args.Body;
-        if (!HasComp<HumanoidAppearanceComponent>(body) || !TryComp<SpriteComponent>(body, out var sprite))
+        if (!HasComp<HumanoidProfileComponent>(body) || !TryComp<SpriteComponent>(body, out var sprite))
             return;
 
         if (ent.Comp.DamageOverlayGroups != null)

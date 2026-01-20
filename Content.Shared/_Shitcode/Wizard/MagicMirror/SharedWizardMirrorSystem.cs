@@ -61,7 +61,7 @@ public abstract class SharedWizardMirrorSystem : EntitySystem
     {
         var user = component.Target ?? args.User;
 
-        if (!HasComp<HumanoidAppearanceComponent>(user))
+        if (!HasComp<HumanoidProfileComponent>(user))
             args.Cancel();
     }
 
@@ -72,11 +72,12 @@ public abstract class SharedWizardMirrorSystem : EntitySystem
 
     protected void UpdateInterface(EntityUid mirrorUid, EntityUid targetUid, WizardMirrorComponent component)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(targetUid, out var humanoid))
+        if (!TryComp<HumanoidProfileComponent>(targetUid, out var humanoid))
             return;
 
         component.Target ??= targetUid;
 
+        /* TODO NUBODY: update to use new markings thing
         var hair = (HairStyles.DefaultHairStyle, humanoid.CachedHairColor ?? Color.Black);
         if (humanoid.MarkingSet.TryGetCategory(MarkingCategories.Hair, out var hairMarkings) && hairMarkings.Count > 0)
         {
@@ -92,10 +93,7 @@ public abstract class SharedWizardMirrorSystem : EntitySystem
             facialHair = (facialHairMarking.MarkingId, facialHairMarking.MarkingColors.FirstOrNull() ?? Color.Black);
         }
 
-        var appearance = new HumanoidCharacterAppearance(hair.Item1,
-            hair.Item2,
-            facialHair.Item1,
-            facialHair.Item2,
+        var appearance = new HumanoidCharacterAppearance(
             humanoid.EyeColor,
             humanoid.SkinColor,
             humanoid.MarkingSet.GetForwardEnumerator().ToList());
@@ -112,6 +110,7 @@ public abstract class SharedWizardMirrorSystem : EntitySystem
         component.Target = targetUid;
         UISystem.SetUiState(mirrorUid, WizardMirrorUiKey.Key, state);
         Dirty(mirrorUid, component);
+        */
     }
 }
 

@@ -28,7 +28,6 @@ public abstract class SharedShadowlingSystem : EntitySystem
 {
     [Dependency] private readonly MobStateSystem _mobStateSystem = default!;
     [Dependency] private readonly SharedLightDetectionDamageSystem _lightDamage = default!;
-    [Dependency] private readonly SharedHumanoidAppearanceSystem _appearance = default!;
     [Dependency] private readonly SharedAudioSystem _audio = default!;
     [Dependency] private readonly SharedPopupSystem _popup = default!;
     [Dependency] private readonly IPrototypeManager _protoMan = default!;
@@ -148,8 +147,10 @@ public abstract class SharedShadowlingSystem : EntitySystem
 
                 // this is such a big L that even the code is losing and all variables are hardcoded.
                 _status.TryAddStatusEffect(uid, "ShadowlingAbominationStatusEffect", out _);
+                /* TODO NUBODY: reimplement this when theres a marking api
                 _appearance.AddMarking(uid, "AbominationTorso");
                 _appearance.AddMarking(uid, "AbominationHorns");
+                */
 
                 // take another hardcoded variable
                 _damageable.SetDamageModifierSetId(uid, "ShadowlingAbomination");
@@ -195,7 +196,7 @@ public abstract class SharedShadowlingSystem : EntitySystem
             return false;
         }
 
-        if (!HasComp<HumanoidAppearanceComponent>(target))
+        if (!HasComp<HumanoidProfileComponent>(target))
         {
             _popup.PopupPredicted(Loc.GetString("shadowling-enthrall-non-humanoid"), uid, uid, PopupType.SmallCaution);
             return false;

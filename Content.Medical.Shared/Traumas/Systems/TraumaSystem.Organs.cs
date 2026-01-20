@@ -93,7 +93,7 @@ public partial class TraumaSystem
             && !_mobState.IsDead(body))
         {
             var sex = Sex.Unsexed;
-            if (TryComp<HumanoidAppearanceComponent>(body, out var humanoid))
+            if (TryComp<HumanoidProfileComponent>(body, out var humanoid))
                 sex = humanoid.Sex;
 
             var brain = nerveSys.Value;

@@ -24,7 +24,7 @@
         - id: OrganIPCEars
         - id: PositronicBrain
         - id: OrganIPCPump
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: IPC
 
 - type: entity

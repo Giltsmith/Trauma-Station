@@ -32,7 +32,6 @@ public sealed class BodyEquipmentSystem : EntitySystem
 
         _inventoryQuery = GetEntityQuery<InventoryComponent>();
 
-        //SubscribeLocalEvent<BodyComponent, ProfileLoadFinishedEvent>(OnProfileLoadFinished);
         SubscribeLocalEvent<BodyEquipmentComponent, IsEquippingTargetAttemptEvent>(OnEquippingTargetAttempt);
         SubscribeLocalEvent<BodyEquipmentComponent, CheckEquipmentPartEvent>(OnCheckEquipmentPart);
         SubscribeLocalEvent<BodyEquipmentComponent, OrganRemovedFromEvent>(OnOrganRemovedFrom);
@@ -72,22 +71,6 @@ public sealed class BodyEquipmentSystem : EntitySystem
 
     private bool HasBodyPart(EntityUid body, BodyPartType part)
         => _part.FindBodyPart(body, part) != null;
-
-    /* TODO NUBODY: find out if this is still needed (and put in good place)
-    private void OnProfileLoadFinished(EntityUid uid, BodyComponent component, ProfileLoadFinishedEvent args)
-    {
-        if (!TryComp<HumanoidAppearanceComponent>(uid, out var humanoid)
-            || TerminatingOrDeleted(uid)
-            || !Initialized(uid))
-            return;
-
-        foreach (var part in GetBodyChildren(uid, component))
-            EnsureComp<BodyPartAppearanceComponent>(part.Id);
-
-        humanoid.ProfileLoaded = true;
-        Dirty(uid, humanoid);
-    }
-    */
 
     public static BodyPartType? GetInventoryPart(string slot)
         => slot switch

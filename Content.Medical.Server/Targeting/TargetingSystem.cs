@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 using Content.Goobstation.Common.Weapons.Ranged;
+using Content.Medical.Common.Targeting;
 using Content.Medical.Common.Wounds;
 using Content.Medical.Shared.Targeting;
 using Content.Medical.Shared.Wounds;
@@ -27,7 +28,7 @@ public sealed class TargetingSystem : SharedTargetingSystem
     {
         if (args.SenderSession.AttachedEntity is not {} user ||
             !_query.TryComp(user, out var comp) ||
-            comp.Target == msg.Part)
+            comp.Target == msg.BodyPart)
             return;
 
         comp.Target = msg.BodyPart;

@@ -6,7 +6,6 @@ namespace Content.Shared.Humanoid
         {
             return layer switch
             {
-                HumanoidVisualLayers.Groin => true,
                 HumanoidVisualLayers.Chest => true,
                 HumanoidVisualLayers.Head => true,
                 _ => false
@@ -64,15 +63,10 @@ namespace Content.Shared.Humanoid
                     break;
                 case HumanoidVisualLayers.Chest:
                     yield return HumanoidVisualLayers.Chest;
-                    yield return HumanoidVisualLayers.Wings; // for IPC wings port from SimpleStation
                     yield return HumanoidVisualLayers.Tail;
+                    yield return HumanoidVisualLayers.Wings; // Goob
+                    break;
                 // Shitmed Change Start
-                    yield return HumanoidVisualLayers.Groin;
-                    break;
-                case HumanoidVisualLayers.Groin:
-                    yield return HumanoidVisualLayers.Groin;
-                    yield return HumanoidVisualLayers.Tail;
-                    break;
                 case HumanoidVisualLayers.LHand:
                     yield return HumanoidVisualLayers.LHand;
                     break;

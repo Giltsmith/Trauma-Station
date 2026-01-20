@@ -472,7 +472,7 @@ public sealed class HisGraceSystem : SharedHisGraceSystem
 
         // don't apply bonuses for entities consumed that don't have minds or aren't human (no farming sentient mice)
         if (_mind.TryGetMind(target, out _, out _)
-            && HasComp<HumanoidAppearanceComponent>(target))
+            && HasComp<HumanoidProfileComponent>(target))
         {
             var ev = new HisGraceEntityConsumedEvent();
             RaiseLocalEvent(hisGrace, ref ev);

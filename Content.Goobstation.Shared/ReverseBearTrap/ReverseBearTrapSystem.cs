@@ -90,7 +90,7 @@ public sealed partial class ReverseBearTrapSystem : EntitySystem
 
         // Ensure we're actually hitting a valid target
         if (args.HitEntities.Count == 0 ||
-            !HasComp<HumanoidAppearanceComponent>(args.HitEntities.First()) ||
+            !HasComp<HumanoidProfileComponent>(args.HitEntities.First()) ||
             _inventory.TryGetSlotEntity(args.HitEntities.First(), "head", out _))
             return;
 

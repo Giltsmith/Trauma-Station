@@ -24,7 +24,7 @@
   - type: Body
     prototype: BananaMen
     requiredLegs: 2
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: BananaMen
     hideLayersOnEquip:
     - Hair
@@ -42,7 +42,7 @@
   id: MobBananaMenDummy
   categories: [ HideSpawnMenu ]
   components:
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: BananaMen
   - type: Inventory
     templateId: human

@@ -10,9 +10,11 @@
     inverted: true
   effects:
   - !type:AddMarking
+    organ: Head
     marking: CatEars
     forced: true
   - !type:AddMarking
+    organ: Torso
     marking: CatTail
     forced: true
   - !type:RelayOrgans
@@ -39,8 +41,10 @@
     marking: CatEars
   effects:
   - !type:RemoveMarking
+    organ: Head
     marking: CatEars
   - !type:RemoveMarking
+    organ: Torso
     marking: CatTail
   - !type:RelayOrgans
     whitelist:

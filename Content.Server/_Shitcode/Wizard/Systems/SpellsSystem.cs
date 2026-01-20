@@ -295,12 +295,12 @@ public sealed class SpellsSystem : SharedSpellsSystem
         int? age = null;
         Gender? gender = null;
         Sex? sex = null;
-        if (TryComp(oldEnt, out HumanoidAppearanceComponent? humanoid))
+        if (TryComp(oldEnt, out HumanoidProfileComponent? humanoid))
         {
             age = humanoid.Age;
             gender = humanoid.Gender;
             sex = humanoid.Sex;
-            if (TryComp(newEntity, out HumanoidAppearanceComponent? newHumanoid))
+            if (TryComp(newEntity, out HumanoidProfileComponent? newHumanoid))
             {
                 newHumanoid.Age = age.Value;
                 newHumanoid.Gender = gender.Value;

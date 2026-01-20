@@ -221,7 +221,7 @@ public sealed partial class ChangelingSystem
             if (TryComp<ChangelingBiomassComponent>(uid, out var userBiomass))
                 biomassMaxIncrease = userBiomass.MaxBiomass / 2;
 
-            if (!TryComp<HumanoidAppearanceComponent>(target, out var targetForm)
+            if (!TryComp<HumanoidProfileComponent>(target, out var targetForm)
                 || targetForm.Species == "Monkey") // if they are a headslug or in monkey form
                 popup = Loc.GetString("changeling-absorb-end-self-ling-incompatible");
         }

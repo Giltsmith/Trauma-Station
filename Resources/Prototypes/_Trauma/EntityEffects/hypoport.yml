@@ -31,7 +31,7 @@
   - !type:WhitelistCondition
     whitelist:
       components:
-      - HumanoidAppearance # no corgis or whatever the fuck
+      - HumanoidProfile # no corgis or whatever the fuck
     blacklist:
       components:
       - NoHypoport # to let people opt out for schizo characters via trait

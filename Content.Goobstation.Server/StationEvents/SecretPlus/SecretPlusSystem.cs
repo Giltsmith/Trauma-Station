@@ -349,9 +349,9 @@ public sealed class SecretPlusSystem : GameRuleSystem<SecretPlusComponent>
             // TODO: A
             if (player.AttachedEntity != null)
             {
-                // TODO: Consider a custom component here instead of HumanoidAppearanceComponent to represent
+                // TODO: Consider a custom component here instead of HumanoidProfileComponent to represent
                 //        "significant enough to count as a whole player"
-                if (HasComp<HumanoidAppearanceComponent>(player.AttachedEntity))
+                if (HasComp<HumanoidProfileComponent>(player.AttachedEntity))
                     count.Players += 1;
                 // don't count bodyless ghosts aka say roundstart spectators
                 // not reliable but works

@@ -53,11 +53,12 @@ using Content.Server.Actions;
 using Content.Server.Body.Components;
 using Content.Server.Body.Systems;
 using Content.Server.DoAfter;
+using Content.Shared.Body;
+using Content.Shared.DetailExaminable;
 using Content.Shared.Emp;
 using Content.Server.Explosion.EntitySystems;
 using Content.Server.Gravity;
 using Content.Server.Guardian;
-using Content.Server.Humanoid;
 using Content.Shared.Light.EntitySystems;
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
@@ -96,6 +97,7 @@ using Content.Shared.Movement.Pulling.Systems;
 using Content.Shared.Movement.Systems;
 using Content.Shared.Nutrition.Components;
 using Content.Shared.Polymorph;
+using Content.Shared.Preferences;
 using Content.Shared.Projectiles;
 using Content.Shared.Rejuvenate;
 using Content.Shared.Revolutionary.Components;
@@ -133,7 +135,8 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
     [Dependency] private readonly BloodstreamSystem _blood = default!;
     [Dependency] private readonly ISerializationManager _serialization = default!;
     [Dependency] private readonly MetaDataSystem _metaData = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
+    [Dependency] private readonly HumanoidProfileSystem _humanoid = default!;
+    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
     [Dependency] private readonly SharedSolutionContainerSystem _solution = default!;
     [Dependency] private readonly TransformSystem _transform = default!;
     [Dependency] private readonly SharedEmpSystem _emp = default!;
@@ -154,17 +157,20 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
     [Dependency] private readonly SelectableAmmoSystem _selectableAmmo = default!;
     [Dependency] private readonly ChangelingRuleSystem _changelingRuleSystem = default!;
 
-    public EntProtoId ArmbladePrototype = "ArmBladeChangeling";
-    public EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
-    public EntProtoId HammerPrototype = "ArmHammerChangeling";
-    public EntProtoId ClawPrototype = "ArmClawChangeling";
-    public EntProtoId DartGunPrototype = "DartGunChangeling";
+    public static readonly EntProtoId ArmbladePrototype = "ArmBladeChangeling";
+    public static readonly EntProtoId FakeArmbladePrototype = "FakeArmBladeChangeling";
+    public static readonly EntProtoId HammerPrototype = "ArmHammerChangeling";
+    public static readonly EntProtoId ClawPrototype = "ArmClawChangeling";
+    public static readonly EntProtoId DartGunPrototype = "DartGunChangeling";
 
-    public EntProtoId ShieldPrototype = "ChangelingShield";
-    public EntProtoId BoneShardPrototype = "ThrowingStarChangeling";
+    public static readonly EntProtoId ShieldPrototype = "ChangelingShield";
+    public static readonly EntProtoId BoneShardPrototype = "ThrowingStarChangeling";
 
-    public EntProtoId ArmorPrototype = "ChangelingClothingOuterArmor";
-    public EntProtoId ArmorHelmetPrototype = "ChangelingClothingHeadHelmet";
+    public static readonly EntProtoId ArmorPrototype = "ChangelingClothingOuterArmor";
+    public static readonly EntProtoId ArmorHelmetPrototype = "ChangelingClothingHeadHelmet";
+
+    public static readonly ProtoId<OrganCategoryPrototype> EyesCategory = "Eyes";
+    public static readonly ProtoId<OrganCategoryPrototype> TorsoCategory = "Torso";
 
     public override void Initialize()
     {
@@ -579,9 +585,10 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
 
     public bool TryStealDNA(EntityUid uid, EntityUid target, ChangelingIdentityComponent comp, bool countObjective = false)
     {
-        if (!TryComp<HumanoidAppearanceComponent>(target, out var appearance)
+        if (!TryComp<HumanoidProfileComponent>(target, out var humanoid)
         || !TryComp<DnaComponent>(target, out var dna)
-        || !TryComp<FingerprintComponent>(target, out var fingerprint))
+        || !TryComp<FingerprintComponent>(target, out var fingerprint)
+        || !_visualBody.TryGatherMarkingsData(target, null, out var organs, out _, out var markings))
         {
             _popup.PopupEntity(Loc.GetString("changeling-sting-extract-fail-lesser"), uid, uid);
             return false;
@@ -596,11 +603,34 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
             }
         }
 
+        // god i love shitcode having 0 apis so i must write even more shitcode
+        var flavortext = CompOrNull<DetailExaminableComponent>(target)?.Content ?? string.Empty;
+        // THANK YOU FOR NOT STORING THESE ANYWHERE!!!!!
+        var eyeColor = organs.TryGetValue(EyesCategory, out var eye) ? eye.EyeColor : Color.Black;
+        var skinColor = organs.TryGetValue(TorsoCategory, out var torso) ? torso.SkinColor : Color.White;
+        var appearance = new HumanoidCharacterAppearance(eyeColor, skinColor, markings);
+        var profile = new HumanoidCharacterProfile(
+            Name(target),
+            flavortext,
+            humanoid.Species,
+            humanoid.Age,
+            humanoid.Sex,
+            humanoid.Gender,
+            appearance,
+            // not spawning player don't care about anything here
+            default!,
+            new(),
+            default!,
+            new(),
+            new(),
+            new(),
+            humanoid.BarkVoice);
+
         var data = new TransformData
         {
             Name = Name(target),
             DNA = dna.DNA ?? Loc.GetString("forensics-dna-unknown"),
-            Appearance = appearance
+            Profile = profile
         };
 
         if (fingerprint.Fingerprint != null)
@@ -639,7 +669,7 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
 
         if (data != null)
         {
-            if (!_proto.TryIndex(data.Appearance.Species, out var species))
+            if (!_proto.TryIndex(data.Profile.Species, out var species))
                 return null;
             pid = species.Prototype;
         }
@@ -672,7 +702,8 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
         {
             Comp<FingerprintComponent>(newEnt).Fingerprint = data.Fingerprint;
             Comp<DnaComponent>(newEnt).DNA = data.DNA;
-            _humanoid.CloneAppearance(data.Appearance.Owner, newEnt);
+            _visualBody.ApplyProfileTo(newEnt, data.Profile);
+            _humanoid.ApplyProfileTo(newEnt, data.Profile);
             _metaData.SetEntityName(newEnt, data.Name);
             var message = Loc.GetString("changeling-transform-finish", ("target", data.Name));
             _popup.PopupEntity(message, newEnt, newEnt);
@@ -693,7 +724,7 @@ public sealed partial class ChangelingSystem : SharedChangelingSystem
         foreach (var type in types)
             _polymorph.CopyPolymorphComponent(uid, newEnt, nameof(type));
 
-        // CopyPolymorphComponent fails to copy the HumanoidAppearanceComponent in TransformData
+        // CopyPolymorphComponent fails to copy the HumanoidProfileComponent in TransformData
         // outside of the first list item so this has to be done manually unfortunately
         if (TryComp<ChangelingIdentityComponent>(newEnt, out var newComp)
             && comp != null)

@@ -93,7 +93,7 @@ public sealed partial class HealthAnalyzerControl
     public void PopulateTrauma(EntityUid target, HealthAnalyzerUiState state)
     {
         _target = target;
-        var humanoid = _entityManager.HasComponent<HumanoidAppearanceComponent>(target);
+        var humanoid = _entityManager.HasComponent<HumanoidProfileComponent>(target);
         SetActiveButtons(humanoid);
 
         // Patient Information

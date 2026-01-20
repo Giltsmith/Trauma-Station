@@ -42,7 +42,7 @@ public sealed partial class AbductorSystem : SharedAbductorSystem
             || HasComp<AbductorComponent>(args.Body) // no experimenting on yourself/your buddy
             || !TryComp<AbductorVictimComponent>(args.Body, out var victimComp) // you get nothing if you didn't gizmo
             || victimComp.Implanted // no farming
-            || !HasComp<HumanoidAppearanceComponent>(args.Body) // experimenting on mice doesn't count
+            || !HasComp<HumanoidProfileComponent>(args.Body) // experimenting on mice doesn't count
             || !_mind.TryGetMind(args.Body, out var mindId, out var mind) // stealing ssd doesn't count
             || !TryComp<ActorComponent>(args.Body, out var actor)
             || !HasComp<AbductorOrganComponent>(args.Tool))

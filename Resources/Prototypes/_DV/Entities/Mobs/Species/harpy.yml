@@ -126,7 +126,7 @@
         sprite: _DV/Effects/harpysinger.rsi
         state: singing_music_notes
         visible: false
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Harpy
   - type: Fixtures
     fixtures: # TODO: This needs a second fixture just for mob collisions.
@@ -212,74 +212,3 @@
       amount: 5
     - id: MaterialBones1
       amount: 2 # birds have light bones, thus 1 less than other species.
-
-- type: entity
-  save: false
-  name: Urist McHands
-  parent: MobHumanDummy
-  id: MobHarpyDummy
-  categories: [ HideSpawnMenu ]
-  description: A dummy Harpy meant to be used in character setup.
-  components:
-  - type: HumanoidAppearance
-    species: Harpy
-  - type: Inventory
-    speciesId: harpy
-    templateId: digitigrade # Einstein Engines
-    displacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: _DV/Mobs/Species/Harpy/displacement.rsi
-            state: jumpsuit
-    femaleDisplacements:
-      jumpsuit:
-        sizeMaps:
-          32:
-            sprite: _DV/Mobs/Species/Harpy/displacement.rsi
-            state: jumpsuit
-  - type: Sprite
-    layers:
-      - map: [ "enum.HumanoidVisualLayers.Chest" ]
-      - map: [ "enum.HumanoidVisualLayers.Groin" ]
-      - map: [ "enum.HumanoidVisualLayers.Head" ]
-      - map: [ "enum.HumanoidVisualLayers.Snout" ]
-      - map: [ "enum.HumanoidVisualLayers.Eyes" ]
-      - map: [ "enum.HumanoidVisualLayers.LArm" ]
-      - map: [ "enum.HumanoidVisualLayers.RLeg" ]
-      - map: [ "enum.HumanoidVisualLayers.LLeg" ]
-      - map: [ "underpants" ]
-      - map: [ "undershirt" ]
-      - map: [ "socks" ]
-      - map: [ "jumpsuit" ]
-      - map: ["enum.HumanoidVisualLayers.LFoot"]
-      - map: ["enum.HumanoidVisualLayers.RFoot"]
-      - map: ["enum.HumanoidVisualLayers.LHand"]
-      - map: ["enum.HumanoidVisualLayers.RHand"]
-      - map: [ "id" ]
-      - map: [ "gloves" ]
-      - map: [ "ears" ]
-      - map: [ "outerClothing" ]
-      - map: [ "eyes" ]
-      - map: [ "belt" ]
-      - map: [ "neck" ]
-      - map: [ "back" ]
-      - map: [ "enum.HumanoidVisualLayers.Face" ]
-      - map: [ "enum.HumanoidVisualLayers.FacialHair" ]
-      - map: [ "enum.HumanoidVisualLayers.FacialHairSpecial" ] # Trauma
-      - map: [ "enum.HumanoidVisualLayers.HeadSide" ]
-      - map: [ "enum.HumanoidVisualLayers.HeadTop" ]
-      - map: [ "enum.HumanoidVisualLayers.Tail" ]
-      - map: [ "pocket1" ]
-      - map: [ "pocket2" ]
-      - map: [ "clownedon" ] # Dynamically generated
-        sprite: "Effects/creampie.rsi"
-        state: "creampie_human"
-        visible: false
-# Yes, RArm has to be down here
-      - map: [ "enum.HumanoidVisualLayers.RArm" ]
-      - map: [ "maskalt" ]
-      - map: [ "enum.HumanoidVisualLayers.Hair" ]
-      - map: [ "enum.HumanoidVisualLayers.HairSpecial" ] # Trauma
-      - map: [ "mask" ]
-      - map: [ "head" ]

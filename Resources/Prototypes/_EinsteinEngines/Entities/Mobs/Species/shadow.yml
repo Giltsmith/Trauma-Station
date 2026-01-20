@@ -7,7 +7,7 @@
   abstract: true
   components:
   - type: Absorbable # idk why
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Shadow
   - type: Fingerprint
   - type: Blindable

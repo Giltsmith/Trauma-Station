@@ -99,7 +99,7 @@ public sealed class SlasherMassacreSystem : EntitySystem
         var victim = EntityUid.Invalid;
         foreach (var hit in args.HitEntities)
         {
-            if (!HasComp<HumanoidAppearanceComponent>(hit))
+            if (!HasComp<HumanoidProfileComponent>(hit))
                 continue;
 
             victim = hit;

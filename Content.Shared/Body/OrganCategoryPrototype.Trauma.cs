@@ -5,7 +5,7 @@ namespace Content.Shared.Body;
 /// </summary>
 public sealed partial class OrganCategoryPrototype
 {
-    public LocId NameLoc => $"organ-category-{ID}-name";
+    public LocId NameLoc => $"markings-organ-{ID}";
 
     /// <summary>
     /// Get the localized name for this category.

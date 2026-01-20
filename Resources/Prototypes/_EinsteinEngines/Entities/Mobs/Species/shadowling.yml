@@ -2,12 +2,11 @@
   save: false
   name: Urist McSling
   parent: BaseMobSpeciesOrganic
-  id: BaseMobShadowling
+  id: MobShadowling
   categories: [HideSpawnMenu]
-  abstract: true
   components:
   - type: Absorbable # idk why
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Shadowling
   - type: Fingerprint
   - type: Blindable
@@ -71,16 +70,3 @@
     channels:
     - Shadowmind
   - type: ZombieImmune  # Goobstation
-
-- type: entity
-  parent: BaseSpeciesDummy
-  id: MobShadowlingDummy
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: HumanoidAppearance
-    species: Shadowling
-
-# for yaml linter
-- type: entity
-  parent: BaseMobShadowling
-  id: MobShadowling

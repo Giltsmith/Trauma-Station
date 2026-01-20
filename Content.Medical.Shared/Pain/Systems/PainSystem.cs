@@ -161,7 +161,7 @@ public sealed partial class PainSystem : EntitySystem
         {
             case MobState.Critical:
                 var sex = Sex.Unsexed;
-                if (TryComp<HumanoidAppearanceComponent>(ent, out var humanoid))
+                if (TryComp<HumanoidProfileComponent>(ent, out var humanoid))
                     sex = humanoid.Sex;
 
                 PlayPainSoundWithCleanup(ent, ent.Comp, ent.Comp.CritWhimpers[sex], AudioParams.Default.WithVolume(-12f));

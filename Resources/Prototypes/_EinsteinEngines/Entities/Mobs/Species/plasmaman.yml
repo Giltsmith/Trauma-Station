@@ -132,7 +132,7 @@
     normalBodyTemperature: 270.15
   - type: Flammable
     firestackFade: -0.05
-  - type: HumanoidAppearance
+  - type: HumanoidProfile
     species: Plasmaman
     hideLayersOnEquip:
     - Hair
@@ -197,13 +197,3 @@
       243: 0.8
   - type: Fart
     gasToFart: Plasma
-
-- type: entity
-  parent: BaseSpeciesDummy
-  id: MobPlasmamanDummy
-  categories: [ HideSpawnMenu ]
-  components:
-  - type: HumanoidAppearance
-    species: Plasmaman
-  - type: Inventory
-    templateId: plasmaman

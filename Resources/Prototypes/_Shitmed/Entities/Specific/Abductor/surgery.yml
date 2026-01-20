@@ -50,6 +50,11 @@
     - Abductors
   # barber scissor
   - type: MagicMirror
+    organs:
+    - Head
+    layers:
+    - Hair
+    - FacialHair
     addSlotTime: 2
     removeSlotTime: 2 # yawn and your hair is gone
     selectSlotTime: 2

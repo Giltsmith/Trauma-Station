@@ -491,7 +491,7 @@ public sealed class SlasherIncorporealSystem : EntitySystem
             if (HasComp<GhostComponent>(other))
                 continue;
 
-            if (!HasComp<HumanoidAppearanceComponent>(other))
+            if (!HasComp<HumanoidProfileComponent>(other))
                 continue;
 
             if (_mobState.IsDead(other))

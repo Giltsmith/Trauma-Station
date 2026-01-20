@@ -1,6 +1,5 @@
 // <Trauma>
-using Content.Medical.Common.Body;
-using Content.Server.Database;
+using Content.Medical.Shared.Wounds;
 using Content.Shared.Body;
 using System.Linq;
 // </Trauma>
@@ -156,15 +155,9 @@ public sealed partial class MindTests
             var prototype = protoMan.Index(BluntDamageType);
 
             // <Goob> - damage all limbs too
-            if (entMan.TryGetComponent(entity, out BodyComponent? body))
+            foreach (var woundable in bodySystem.GetOrgans<WoundableComponent>(entity))
             {
-                foreach (var woundable in bodySystem.GetOrgans((entity, body)))
-                {
-                    if (!entMan.TryGetComponent(woundable, out BodyPartComponent? bpc))
-                        continue;
-
-                    damageableSystem.SetDamage(woundable, new DamageSpecifier(prototype, FixedPoint2.New(100)));
-                }
+                damageableSystem.SetDamage(woundable.Owner, new DamageSpecifier(prototype, FixedPoint2.New(100)));
             }
             // </Goob>
             damageableSystem.SetDamage((entity, damageable), new DamageSpecifier(prototype, FixedPoint2.New(401)));

@@ -7,13 +7,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Server.Guardian;
-using Content.Server.Humanoid;
 using Content.Server.Mind;
 using Content.Server.Polymorph.Components;
 using Content.Server.Polymorph.Systems;
 using Content.Server.Popups;
 using Content.Shared._Goobstation.Wizard.BindSoul;
 using Content.Shared._Goobstation.Wizard.MagicMirror;
+using Content.Shared.Body;
 using Content.Shared.Humanoid;
 using Content.Shared.Humanoid.Markings;
 using Content.Shared.IdentityManagement;
@@ -27,13 +27,14 @@ namespace Content.Server._Goobstation.Wizard.Systems;
 public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
 {
     [Dependency] private readonly IPrototypeManager _proto = default!;
-    [Dependency] private readonly HumanoidAppearanceSystem _humanoid = default!;
-    [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly GrammarSystem _grammar = default!;
-    [Dependency] private readonly PolymorphSystem _polymorph = default!;
+    [Dependency] private readonly HumanoidProfileSystem _humanoid = default!;
+    [Dependency] private readonly MarkingManager _markingManager = default!;
     [Dependency] private readonly MetaDataSystem _meta = default!;
-    [Dependency] private readonly PopupSystem _popup = default!;
     [Dependency] private readonly MindSystem _mind = default!;
+    [Dependency] private readonly PolymorphSystem _polymorph = default!;
+    [Dependency] private readonly PopupSystem _popup = default!;
+    [Dependency] private readonly SharedVisualBodySystem _visualBody = default!;
 
     public override void Initialize()
     {
@@ -49,7 +50,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
 
     private void OnMessage(Entity<WizardMirrorComponent> ent, ref WizardMirrorMessage args)
     {
-        if (!TryComp(ent.Comp.Target, out HumanoidAppearanceComponent? humanoid))
+        if (!TryComp(ent.Comp.Target, out HumanoidProfileComponent? humanoid))
             return;
 
         ForceLoadProfile(ent.Comp.Target.Value, ent.Comp, args.Profile, humanoid);
@@ -64,7 +65,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
     private void ForceLoadProfile(EntityUid target,
         WizardMirrorComponent component,
         HumanoidCharacterProfile profile,
-        HumanoidAppearanceComponent humanoid)
+        HumanoidProfileComponent humanoid)
     {
         var age = humanoid.Age;
         if (humanoid.Species != profile.Species && component.AllowedSpecies.Contains(profile.Species) &&
@@ -105,19 +106,18 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
             if (newUid != null)
             {
                 RemCompDeferred<PolymorphedEntityComponent>(newUid.Value);
-                humanoid = EnsureComp<HumanoidAppearanceComponent>(newUid.Value);
+                humanoid = EnsureComp<HumanoidProfileComponent>(newUid.Value);
                 target = newUid.Value;
-                _humanoid.SetSpecies(target, profile.Species, false, humanoid);
+                humanoid.Species = profile.Species;
             }
         }
 
         _meta.SetEntityName(target, profile.Name);
-        _humanoid.SetSex(target, profile.Sex, false, humanoid);
+        humanoid.Sex = profile.Sex;
+        /* TODO NUBODY: reimplement this dogshit
         humanoid.EyeColor = profile.Appearance.EyeColor;
 
-        _humanoid.SetSkinColor(target, profile.Appearance.SkinColor, false, false);
-
-        humanoid.MarkingSet.Clear();
+        humanoid.SkinColor = profile.Appearance.SkinColor;
 
         // Add markings that doesn't need coloring. We store them until we add all other markings that doesn't need it.
         var markingFColored = new Dictionary<Marking, MarkingPrototype>();
@@ -167,6 +167,7 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
         humanoid.MarkingSet.EnsureSpecies(profile.Species, profile.Appearance.SkinColor, _markingManager, _proto);
 
         humanoid.MarkingSet.EnsureDefault(humanoid.SkinColor, humanoid.EyeColor, _markingManager);
+        */
 
         humanoid.Gender = profile.Gender;
         if (TryComp<GrammarComponent>(target, out var grammar))
@@ -186,7 +187,6 @@ public sealed class WizardMirrorSystem : SharedWizardMirrorSystem
             Dirty(mind, soulBound);
         }
 
-        //RaiseLocalEvent(target, new ProfileLoadFinishedEvent()); // TODO NUBODY
         Dirty(target, humanoid);
     }
 }

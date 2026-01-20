@@ -153,7 +153,7 @@ public sealed class HereticCombatMarkSystem : SharedHereticCombatMarkSystem
 
         // transfers the mark to the next nearby person
         var look = _lookup.GetEntitiesInRange(target, 5f, flags: LookupFlags.Dynamic)
-            .Where(x => x != target && HasComp<HumanoidAppearanceComponent>(x) && !_heretic.IsHereticOrGhoul(x))
+            .Where(x => x != target && HasComp<HumanoidProfileComponent>(x) && !_heretic.IsHereticOrGhoul(x))
             .ToList();
         if (look.Count == 0)
             return true;
