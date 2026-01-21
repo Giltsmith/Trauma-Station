@@ -1703,3 +1703,11 @@ Entries:
       message: Fixed borgs being affected by language-related traits.
   id: 207
   time: '2026-01-21T20:09:23.0000000+00:00'
+- author: deltanedas
+  changes:
+    - type: Fix
+      message: Fixed xeno actions not using any plasma.
+    - type: Fix
+      message: Fixed ashen passage round removing you.
+  id: 208
+  time: '2026-01-21T20:22:33.0000000+00:00'
