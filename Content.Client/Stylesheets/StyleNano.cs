@@ -1372,7 +1372,6 @@ namespace Content.Client.Stylesheets
 
                 Element<Label>().Class(StyleClassLabelSmall)
                  .Prop(Label.StylePropertyFont, notoSans10),
-                // ---
 
                 // Different Background shapes ---
                 Element<PanelContainer>().Class(ClassAngleRect)
@@ -1657,7 +1656,7 @@ namespace Content.Client.Stylesheets
                         BackgroundColor = FancyTreeSelectedRowColor,
                     }),
 
-                // Shitmed Change Start
+                // Shitmed Change Start - TODO SHITMED: move this into its own sheetlet ffs
                 Element<TextureButton>().Class("TargetDollButtonHead")
                     .Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/_Shitmed/Interface/Targeting/Doll/head_hover.png")),
@@ -1710,6 +1709,29 @@ namespace Content.Client.Stylesheets
                     .Pseudo(TextureButton.StylePseudoClassHover)
                     .Prop(TextureButton.StylePropertyTexture, resCache.GetTexture("/Textures/_Shitmed/Interface/Targeting/Doll/mouth_hover.png")),
                 // Shitmed Change End
+
+                // Inset background (News manager, notifications)
+                Element<PanelContainer>().Class("InsetBackground")
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BackgroundColor = Color.FromHex("#202023"),
+                    }),
+
+                // Default fancy window border styles
+                Element<PanelContainer>().Class("DefaultBorderBottom")
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BorderColor= Color.FromHex("#3B3E56"),
+                        BorderThickness= new Thickness(0, 0, 0, 1),
+                    }),
+
+
+                Element<PanelContainer>().Class("DefaultBorderTop")
+                    .Prop(PanelContainer.StylePropertyPanel, new StyleBoxFlat
+                    {
+                        BorderColor= Color.FromHex("#3B3E56"),
+                        BorderThickness= new Thickness(0, 1, 0, 0),
+                    }),
 
                 // Silicon law edit ui
                 Element<Label>().Class(SiliconLawContainer.StyleClassSiliconLawPositionLabel)
