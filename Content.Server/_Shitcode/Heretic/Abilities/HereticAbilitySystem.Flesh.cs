@@ -53,7 +53,6 @@ public sealed partial class HereticAbilitySystem
         SubscribeLocalEvent<FleshPassiveComponent, DamageChangedEvent>(OnDamageChanged);
         SubscribeLocalEvent<FleshPassiveComponent, MapInitEvent>(OnMapInit);
         SubscribeLocalEvent<FleshPassiveComponent, ConsumingFoodEvent>(OnConsumingFood);
-        SubscribeLocalEvent<FleshPassiveComponent, ExcludeMetabolismGroupsEvent>(OnExclude);
         SubscribeLocalEvent<FleshPassiveComponent, ComponentShutdown>(OnShutdown);
     }
 
@@ -65,7 +64,7 @@ public sealed partial class HereticAbilitySystem
         QueueDel(stomach);
     }
 
-    // TODO: something better wtf is this
+    /* TODO SHITMED: something better wtf is this
     private void OnExclude(Entity<FleshPassiveComponent> ent, ref ExcludeMetabolismGroupsEvent args)
     {
         if (ResolveStomach(ent) is not {} stomach || args.Metabolizer == stomach)
@@ -74,7 +73,7 @@ public sealed partial class HereticAbilitySystem
         args.Groups ??= [];
         args.Groups.Add("Food");
         args.Groups.Add("Drink");
-    }
+    }*/
 
     private void OnConsumingFood(Entity<FleshPassiveComponent> ent, ref ConsumingFoodEvent args)
     {

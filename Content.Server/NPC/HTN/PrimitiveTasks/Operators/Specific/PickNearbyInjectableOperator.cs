@@ -75,7 +75,7 @@ public sealed partial class PickNearbyInjectableOperator : HTNOperator
             if (_mobState.TryGetComponent(entity, out var state) &&
                 _injectQuery.HasComponent(entity) &&
                 _damageQuery.TryGetComponent(entity, out var damage) &&
-                !(_stealthQuery.TryGetComponent(entity, out var stealth) && stealth.Enabled)) // Trauma - stealth check
+                !(_stealthQuery.TryGetComponent(entity, out var stealth) && stealth.Enabled) && // Trauma - stealth check
                 !_recentlyInjected.HasComponent(entity))
             {
                 // no treating dead bodies
