@@ -1772,3 +1772,10 @@ Entries:
     message: CPR is much more reliable now, especially for the CMO and paramedics.
   id: 216
   time: '2026-01-22T21:28:10.0000000+00:00'
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Fixed a bleeding examine message not being localized.
+  id: 217
+  time: '2026-01-23T08:45:16.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/463
