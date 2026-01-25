@@ -1896,3 +1896,10 @@ Entries:
   id: 232
   time: '2026-01-25T10:59:13.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/497
+- author: deltanedas
+  changes:
+  - type: Remove
+    message: Nukies no longer get xenobio or maxcaps for free.
+  id: 233
+  time: '2026-01-25T11:27:07.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/498
