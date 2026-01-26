@@ -2004,3 +2004,10 @@ Entries:
   id: 245
   time: '2026-01-26T15:23:40.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/532
+- author: Rouden
+  changes:
+  - type: Fix
+    message: Fixed GPS showing the station's beacons on lavaland.
+  id: 246
+  time: '2026-01-26T20:36:04.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/534
