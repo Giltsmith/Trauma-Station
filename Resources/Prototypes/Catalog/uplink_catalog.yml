@@ -209,18 +209,18 @@
       - NukeOpsUplink
 
 - type: listing
-  id: UplinkEstoc
-  name: uplink-estoc-name
-  description: uplink-estoc-desc
+  id: UplinkEstocBundle
+  name: uplink-estoc-bundle-name
+  description: uplink-estoc-bundle-desc
   icon: { sprite: /Textures/Objects/Weapons/Guns/Rifles/estoc.rsi, state: icon }
-  productEntity: BriefcaseWeaponDMRFilled
   cost:
     Telecrystal: 55 # Trauma - was 14, a bit cheaper and 5x: this gun is shit
+  productEntity: ClothingBackpackDuffelSyndicateFilledRifle
   categories:
   - UplinkWeaponry
   conditions:
   - !type:StoreWhitelistCondition
-    blacklist:
+    whitelist:
       tags:
       - NukeOpsUplink
 
