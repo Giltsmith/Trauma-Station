@@ -51,11 +51,9 @@ public sealed partial class GunUpgradeSystem : EntitySystem
     [Dependency] private readonly ActionContainerSystem _actionContainer = default!;
     [Dependency] private readonly DamageableSystem _damage = default!;
     [Dependency] private readonly IGameTiming _timing = default!;
-    [Dependency] private readonly ItemSlotsSystem _slots = default!;
     [Dependency] private readonly SharedActionsSystem _actions = default!;
     [Dependency] private readonly SharedEntityEffectsSystem _effects = default!;
     [Dependency] private readonly SharedGunSystem _gun = default!;
-    [Dependency] private readonly SharedPressureEfficiencyChangeSystem _pressure = default!;
 
     private EntityQuery<GunUpgradeComponent> _upgradeQuery;
 

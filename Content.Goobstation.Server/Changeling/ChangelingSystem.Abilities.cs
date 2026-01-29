@@ -780,9 +780,6 @@ public sealed partial class ChangelingSystem
     }
     public void OnVoidAdapt(EntityUid uid, ChangelingIdentityComponent comp, ref ActionVoidAdaptEvent args)
     {
-        if (!TryUseAbility(uid, comp, args))
-            return;
-
         if (!comp.VoidAdaptActive)
         {
             EnsureComp<SpecialBreathingImmunityComponent>(uid);
@@ -824,8 +821,7 @@ public sealed partial class ChangelingSystem
         _statusEffects.TryAddStatusEffect<FleshmendComponent>(uid,
                     args.StatusID,
                     args.Duration,
-                    true,
-                    status);
+                    true);
         _popup.PopupEntity(Loc.GetString("changeling-fleshmend"), uid, uid);
     }
     public void OnLastResort(EntityUid uid, ChangelingIdentityComponent comp, ref ActionLastResortEvent args)

@@ -720,7 +720,7 @@ namespace Content.Client.Lobby.UI
 
                 // <Goob>
                 var antagLoadout = "Antag" + antag.ID;
-                if (!_prototypeManager.TryIndex<RoleLoadoutPrototype>(antagLoadout), out var roleLoadoutProto))
+                if (!_prototypeManager.TryIndex<RoleLoadoutPrototype>(antagLoadout, out var roleLoadoutProto))
                 {
                     loadoutWindowBtn.Disabled = true;
                 }
