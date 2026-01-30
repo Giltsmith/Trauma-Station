@@ -1417,6 +1417,7 @@
   abstract: true
   components:
   # <Trauma>
+  - type: BloodSplatterer
   - type: VentCrawler
     allowInventory: false
   - type: GroupRetaliation
