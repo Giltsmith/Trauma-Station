@@ -2134,3 +2134,14 @@ Entries:
   id: 260
   time: '2026-01-30T17:25:52.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/472
+- author: Armok
+  changes:
+  - type: Add
+    message: Added some patreon custom items!
+  - type: Tweak
+    message: Reinforcement callers start with 2.5K spesos.
+  - type: Tweak
+    message: Lowered stam/explosive resist of most armors.
+  id: 261
+  time: '2026-01-30T17:58:59.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/563
