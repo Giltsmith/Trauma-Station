@@ -2172,3 +2172,10 @@ Entries:
   id: 264
   time: '2026-01-31T14:25:21.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/585
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Fixed splashing liquids on people being silent.
+  id: 265
+  time: '2026-01-31T15:08:51.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/587
