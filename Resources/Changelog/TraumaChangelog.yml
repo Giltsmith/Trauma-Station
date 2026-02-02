@@ -2301,3 +2301,12 @@ Entries:
   id: 281
   time: '2026-02-02T16:00:56.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/625
+- author: NoElkaTheGod
+  changes:
+  - type: Fix
+    message: Cosmic cultists can see their own monument again.
+  - type: Fix
+    message: Heretics can see reality shifts again.
+  id: 282
+  time: '2026-02-02T16:21:26.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/628
