@@ -2280,3 +2280,10 @@ Entries:
   id: 278
   time: '2026-02-02T11:29:29.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/618
+- author: deltanedas
+  changes:
+  - type: Fix
+    message: Fixed agent and revolutionary IDs only having maints access.
+  id: 279
+  time: '2026-02-02T11:39:34.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/621
