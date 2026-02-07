@@ -2351,3 +2351,10 @@ Entries:
   id: 287
   time: '2026-02-07T14:24:20.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/651
+- author: JohnJJohn
+  changes:
+  - type: Fix
+    message: Fixed deep fryer being locked to one direction
+  id: 288
+  time: '2026-02-07T15:29:18.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/652
