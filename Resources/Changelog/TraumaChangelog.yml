@@ -2358,3 +2358,12 @@ Entries:
   id: 288
   time: '2026-02-07T15:29:18.0000000+00:00'
   url: https://github.com/Trauma-Station/Trauma-Station/pull/652
+- author: JohnJJohn
+  changes:
+  - type: Fix
+    message: Fixed Deep fryer making people unstripable
+  - type: Fix
+    message: Fixed Deep fried oils popup
+  id: 289
+  time: '2026-02-07T22:19:06.0000000+00:00'
+  url: https://github.com/Trauma-Station/Trauma-Station/pull/657
